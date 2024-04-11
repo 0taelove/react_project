@@ -1,4 +1,4 @@
-# 설정
+## 설정
 
 - .prettierrc 설정
 
@@ -23,7 +23,7 @@
 - @loadable/component : 지연로딩
 - react-helmet-async : head 태그 내의 특정태그의 내용을 변경시
 
-## 의존성 설치
+# 의존성 설치
 
 ```
 yarn add react-router-dom sass styled-components classnames immer react-icons @loadable/component
@@ -70,7 +70,7 @@ const App = () => {
 export default App;
 ```
 
-## 메세자, 다국어 처리
+## 메세지, 다국어 처리
 
  - 의존성 : i18next, react-i18next
  - 의존성 설치
@@ -155,3 +155,48 @@ const App = () => {
 
 export default App;
 ```
+
+## 레이아웃 구성
+
+- src/layouts/MainLayout.js
+- src/outlines/Header.js
+- src/outlines/Footer.js
+
+## 라우팅 구성
+
+## 설정
+- src/index.js : BrowserRouter 컴포넌트로 감싸기
+
+```javascript
+...
+
+import { BrowserRouter } from 'react-router-dom';
+
+...
+
+root.render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </React.StrictMode>,
+);
+```
+
+## 메인 페이지
+
+## 회원
+
+- /member/join : 회원가입
+- /member/login : 로그인
+
+## 없는 페이지
+- * : 없는 페이지 - common/pages/NotFound.js
+
+## 에러 페이지
+> class형 컴포넌트 - componentDidCatch 사용
+
+- commons/pages/error.js
+- commons/components/ErrorDisplay.js

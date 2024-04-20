@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+
+import { FaSearch } from 'react-icons/fa';
+
 import fontSize from '../styles/fontSize';
 import { color } from '../styles/color';
 import logo from '../images/logo.png';
-import { FaSearch } from 'react-icons/fa';
-
 import MainMenu from './MainMenu';
+import UserInfoContext from '../member/modules/UserInfoContext';
 
 const { primary, dark, light } = color;
 
@@ -32,37 +34,36 @@ const HeaderBox = styled.header`
         }
       }
     }
-}
+  }
 
-    .logo-search {
-      div {
+  .logo-search {
+    div {
+      display: flex;
+      justify-content: space-between;
+      height: 150px;
+      align-items: center;
+
+      form {
         display: flex;
-        justify-content: space-between;
-        height: 150px;
-        align-items: center;
+        height: 45px;
+        width: 380px;
 
-        form {
-          display: flex;
-          height: 45px;
-          width: 380px;
+        button {
+          width: 45px;
+          background: ${dark};
+          border: 0;
+          cursor: pointer;
 
-          button {
-            width: 45px;
-            background: ${dark};
-            border: 0;
-            cursor: pointer;
-            
-            svg {
-              color: ${light};
-              font-size: 1.75rem;
-            }
+          svg {
+            color: ${light};
+            font-size: 1.75rem;
           }
+        }
 
-          input[type='text] {
-            flex-grow: 1;
-            border: 5px solid ${dark};
-            padding: 0 10px;
-          }
+        input[type='text'] {
+          flex-grow: 1;
+          border: 5px solid ${dark};
+          padding: 0 10px;
         }
       }
     }
@@ -71,23 +72,50 @@ const HeaderBox = styled.header`
 
 const Header = () => {
   const { t } = useTranslation();
+  const {
+    states: { isLogin, userInfo },
+  } = useContext(UserInfoContext);
 
   return (
     <HeaderBox>
       <section className="site-top">
         <div className="layout-width">
-          <NavLink
-            to="/member/join"
-            className={({ isActive }) => classNames({ on: isActive })}
-          >
-            {t('회원가입')}
-          </NavLink>
-          <NavLink
-            to="/member/login"
-            className={({ isActive }) => classNames({ on: isActive })}
-          >
-            {t('로그인')}
-          </NavLink>
+          {isLogin ? (
+            <>
+              {/* 로그인 상태 */}
+              <span>
+                {userInfo.name}({userInfo.email}){t('님_로그인')}
+              </span>
+              <NavLink
+                to="/mypage"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('마이페이지')}
+              </NavLink>
+              <NavLink
+                to="/member/logout"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('로그아웃')}
+              </NavLink>
+            </>
+          ) : (
+            <>
+              {/* 미로그인 상태 */}
+              <NavLink
+                to="/member/join"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('회원가입')}
+              </NavLink>
+              <NavLink
+                to="/member/login"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('로그인')}
+              </NavLink>
+            </>
+          )}
         </div>
       </section>
       <section className="logo-search">
@@ -95,6 +123,7 @@ const Header = () => {
           <Link to="/">
             <img src={logo} alt={t('로고')} />
           </Link>
+
           <form autoComplete="off">
             <input type="text" />
             <button type="submit">

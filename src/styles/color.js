@@ -14,8 +14,8 @@ export const buttonColor = {
   secondary: [color.secondary, '#fff', color.secondary],
   success: [color.success, '#fff', color.success],
   danger: [color.danger, '#fff', color.danger],
-  warning: [color.warning, '#212529'],
+  warning: [color.warning, '#212529', '#212529'],
   info: [color.info, '#fff', color.info],
-  light: [color.light, '#212529'],
+  light: [color.light, '#212529', '#212529'],
   dark: [color.dark, '#fff', color.dark],
 };
